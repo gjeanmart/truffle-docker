@@ -31,6 +31,10 @@ router.get('/:contractName', function(req, res) {
 	var contractAddress = truffleArtefact.networks[Object.keys(truffleArtefact.networks)[0]].address;
     res.json({ "name": req.params.contractName, "address": contractAddress });   
 });
+router.get('/:contractName/all', function(req, res) {
+	var truffleArtefact = JSON.parse(fs.readFileSync('/project/build/contracts/'+req.params.contractName+'.json', 'utf8'));
+    res.json(truffleArtefact);   
+});
 
 
 
