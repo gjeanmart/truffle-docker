@@ -1,0 +1,36 @@
+version: '3.2'
+services:
+     
+  parity:
+    image: gjeanmart/parity-dev-docker
+    ports:
+      - "8545:8545"
+    volumes:
+      - .ethereum_data:/root/.local/share/io.parity.ethereum
+      - .ethereum_log:/data/parity-logs
+    environment:
+      AMOUNT: 10
+      ACCOUNTS: 0xf0f15cedc719b5a55470877b0710d5c7816916b1,0x31b26E43651e9371C88aF3D36c14CfD938BaF4Fd
+    networks:
+      - default
+
+  truffle:
+    image: gjeanmart/truffle-docker
+    ports:
+      - "8888:8888"
+    volumes:
+      - /path.to/truffle/project:/project
+    depends_on:
+      - parity
+    environment:
+      CONTRACT_NAME: SmartContractName
+      ACTION: migrate
+      NETWORK: docker
+      RPC_HOST: parity
+      API_PORT: 8888
+      API_HOST: 0.0.0.0
+    networks:
+      - default
+
+networks:
+  default:
