@@ -5,8 +5,10 @@ echo "Running truffle-docker (action $ACTION) !"
 if [ "$ACTION" = "migrate" ]
 then
 	echo "Migrating truffle project [network $NETWORK] ..."
-	rm -rf ./build
+	rm -rf ./build ./node_modules
+	npm install
 	output=$(truffle migrate --reset --compile-all --network $NETWORK)
+	echo $output
 	export CONTRACT_ADDRESS=$(echo "$output" | grep "^$CONTRACT_NAME address:" | sed "s/$CONTRACT_NAME address: //")
 	echo "CONTRACT_ADDRESS=$CONTRACT_ADDRESS"
 fi
