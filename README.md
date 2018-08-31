@@ -127,7 +127,6 @@ services:
     depends_on:
       - parity
     environment:
-      CONTRACT_NAME: SmartContractName
       ACTION: migrate
       NETWORK: docker
       RPC_HOST: parity
