@@ -19,7 +19,7 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - /home/gjeanmart/workspace/kauri/tmp_smartcontract/smart-contracts:/project
+      - /path/to/truffle/project:/project
     depends_on:
       - parity
     environment:
