@@ -112,9 +112,6 @@ services:
     image: gjeanmart/parity-dev-docker
     ports:
       - "8545:8545"
-    volumes:
-      - .ethereum_data:/root/.local/share/io.parity.ethereum
-      - .ethereum_log:/data/parity-logs
     networks:
       - default
 
@@ -128,8 +125,9 @@ services:
       - parity
     environment:
       ACTION: migrate
-      NETWORK: docker
+      NETWORK: development
       RPC_HOST: parity
+      RPC_PORT: 8545
       API_PORT: 8888
       API_HOST: 0.0.0.0
     networks:
@@ -137,6 +135,7 @@ services:
 
 networks:
   default:
+
 
 ```
 
