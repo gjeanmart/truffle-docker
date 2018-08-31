@@ -1,6 +1,6 @@
 *.abi
 *.bin
 .*-docker/
-.ethereun-*/
+samples/.*/
 node_modules
 build

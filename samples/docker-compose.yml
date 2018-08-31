@@ -4,7 +4,7 @@ services:
   parity:
     image: gjeanmart/parity-dev-docker
     ports:
-      - "8545:8545"
+      - "8645:8545"
     volumes:
       - .ethereum_data:/root/.local/share/io.parity.ethereum
       - .ethereum_log:/data/parity-logs
@@ -19,11 +19,10 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - /path.to/truffle/project:/project
+      - /home/gjeanmart/workspace/kauri/tmp_smartcontract/smart-contracts:/project
     depends_on:
       - parity
     environment:
-      CONTRACT_NAME: SmartContractName
       ACTION: migrate
       NETWORK: docker
       RPC_HOST: parity

@@ -8,7 +8,6 @@ A docker container to deploy a Truffle project and access the contract address v
 docker run -it \
 	-p 8888:8888 \
 	-v /path/to/truffle/project:/project \
-	-e CONTRACT_NAME=MyContract \
 	-e ACTION=migrate \
 	-e NETWORK=development \
 	-e RPC_HOST=localhost \
@@ -36,7 +35,6 @@ docker run -it \
 
 | Name | Mandatory | Default | Description |
 | -------- | -------- | -------- | -------- |
-| CONTRACT_NAME | yes |  | Name of the contract file (without extension)  |
 | ACTION | yes |  | action to execute {migrate\|...} |
 | NETWORK | no | development | Network to deploy  |
 | RPC_HOST | no | localhost | RPC host  |
@@ -47,8 +45,8 @@ docker run -it \
 
 ## API
 
-### Get SmartContract address
-Retrieve the smart contract address for a given name
+### Get Smart Contract address
+Retrieve the smart contract address for a given contract name
 
 -   **URL:** `/api/{smart_contract}`    
 -   **Method:** `GET`
@@ -75,6 +73,31 @@ $ curl 'http://localhost:8888/api/MyContract'
 ```
 
 
+### Get Smart Contract Truffle artefact
+Retrieve the smart contract Truffle artefacts for a given contract name
+
+-   **URL:** `/api/{smart_contract}/all`    
+-   **Method:** `GET`
+-   **Header:** `N/A`
+-   **URL Params:** 
+
+| Name | Mandatory | Default | Description |
+| -------- | -------- | -------- | -------- |
+| smart_contract | yes |  | Smart Contract filename (witout extension `.sol`) |
+
+-   **Sample Request:**
+```
+$ curl 'http://localhost:8888/api/MyContract/all'
+```
+
+-   **Success Response:**
+    -   **Code:** 200  
+        **Content:** 
+```
+{
+  ...
+}
+```
 
 
 ## docker-compose
