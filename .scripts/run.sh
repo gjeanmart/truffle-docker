@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
 
 echo "Running truffle-docker"
-echo "GIT_URL = $GIT_URL"
 
 if [ ! -z "$GIT_URL" ]
 then
 	echo "Cloning data from git $GIT_URL (branch $GIT_BRANCH)..."
-	echo "git clone -b $GIT_BRANCH $GIT_URL $SRC_DIR"
 	git clone -b $GIT_BRANCH $GIT_URL $SRC_DIR
 fi
 
