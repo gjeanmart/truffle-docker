@@ -8,12 +8,12 @@ A docker container to deploy a Truffle project and access the Truffle JSON artif
 
 ```
 docker run -it \
-	-p 8888:8888 \
-	-v /path/to/truffle/project:/project \
+  -p 8888:8888 \
+  -v /path/to/truffle/project:/project \
   -e NETWORK=docker \
-	-e API_PORT=8888 \
-	-e API_HOST=0.0.0.0 \
-	gjeanmart/truffle-docker
+  -e API_PORT=8888 \
+  -e API_HOST=0.0.0.0 \
+  gjeanmart/truffle-docker
 ```
 
 **Deploy a Git remote Truffle project**
