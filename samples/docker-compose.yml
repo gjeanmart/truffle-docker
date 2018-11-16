@@ -1,8 +1,8 @@
 version: '3.2'
 services:
      
-  parity:
-    image: gjeanmart/parity-dev-docker
+  eth-node:
+    image: kauriorg/parity-docker
     ports:
       - "8545:8545"
     networks:
@@ -13,13 +13,13 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - /path/to/truffle/project:/project
+      - /home/gjeanmart/workspace/kauri/prague/smart-contracts:/project
     depends_on:
-      - parity
+      - eth-node
     environment:
       ACTION: migrate
-      NETWORK: development
-      RPC_HOST: parity
+      NETWORK: docker
+      RPC_HOST: eth-node
       RPC_PORT: 8545
       API_PORT: 8888
       API_HOST: 0.0.0.0

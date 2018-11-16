@@ -1,16 +1,20 @@
 #!/usr/bin/env bash
 
-echo "Running truffle-docker (action $ACTION) !"
+echo "Running truffle-docker"
+echo "GIT_URL = $GIT_URL"
 
-if [ "$ACTION" = "migrate" ]
+if [ ! -z "$GIT_URL" ]
 then
-	echo "Migrating truffle project [network $NETWORK] ..."
-	rm -rf ./build ./node_modules
-	npm install
-	output=$(truffle migrate --reset --compile-all --network $NETWORK)
-	echo "output: $output"
+	echo "Cloning data from git $GIT_URL (branch $GIT_BRANCH)..."
+	echo "git clone -b $GIT_BRANCH $GIT_URL $SRC_DIR"
+	git clone -b $GIT_BRANCH $GIT_URL $SRC_DIR
 fi
 
+echo "Migrating truffle project [network $NETWORK] ..."
+rm -rf ./build ./node_modules
+npm install
+output=$(truffle migrate --reset --compile-all --network $NETWORK)
+echo "output: $output"
 
 echo "Running express (host: $API_HOST, port: $API_PORT)"
 cd /scripts

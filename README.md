@@ -1,21 +1,45 @@
 # truffle-docker
 
-A docker container to deploy a Truffle project and access the contract address via an API
+A docker container to deploy a Truffle project and access the Truffle JSON artifacts via an API
 
 ## Getting started
+
+**Deploy a local Truffle project located in `/path/to/truffle/project`**
 
 ```
 docker run -it \
 	-p 8888:8888 \
 	-v /path/to/truffle/project:/project \
-	-e ACTION=migrate \
-	-e NETWORK=development \
-	-e RPC_HOST=localhost \
-	-e RPC_PORT=8545 \
+  -e NETWORK=docker \
 	-e API_PORT=8888 \
 	-e API_HOST=0.0.0.0 \
 	gjeanmart/truffle-docker
 ```
+
+**Deploy a Git remote Truffle project**
+```
+docker run -it \
+  -p 8888:8888 \
+  -e NETWORK=docker \
+  -e GIT_URL=git@github.com:my_username/my_truffle_repo.git \
+  -e API_PORT=8888 \
+  -e API_PORT=8888 \
+  -e API_HOST=0.0.0.0 \
+  gjeanmart/truffle-docker
+```
+
+
+
+### Environment variables
+
+| Name | Mandatory | Default | Description |
+| -------- | -------- | -------- | -------- |
+| GIT_URL | no |  | Git project to retrieve (if empty, a volume must be set to bind a local project to $SRC_DIR) |
+| GIT_BRANCH | no | master | Git branch used id $GIT_URL is set |
+| SRC_DIR | yes | /project | Diretory of the Truffle project |
+| NETWORK | no | development | Network to deploy  |
+| API_PORT | no | 8888 | API port |
+| API_HOST | no | 0.0.0.0 | API host  |
 
 ### Port
 
@@ -23,24 +47,6 @@ docker run -it \
 | -------- | -------- | 
 | 8888 | API | 
 
-
-### Volumes
-
-| Name | Mandatory | Description |
-| -------- | -------- | -------- |
-| /project  | yes | Path to the truffle project | 
-
-
-### Environment variables
-
-| Name | Mandatory | Default | Description |
-| -------- | -------- | -------- | -------- |
-| ACTION | yes |  | action to execute {migrate\|...} |
-| NETWORK | no | development | Network to deploy  |
-| RPC_HOST | no | localhost | RPC host  |
-| RPC_PORT | no | 8545 | RPC port  |
-| API_PORT | no | 8888 | API port |
-| API_HOST | no | 0.0.0.0 | API host  |
 
 
 ## API
@@ -102,13 +108,13 @@ $ curl 'http://localhost:8888/api/MyContract/all'
 
 ## docker-compose
 
-Dockr-compose using a separate ethereum node (see [partity-dev-docker](https://github.com/kauri-io/parity-docker))
+Docker-compose using a separate ethereum node (see [partity-dev-docker](https://github.com/kauri-io/parity-docker))
 
 ```
 version: '3.2'
 services:
      
-  parity:
+  parity-node:
     image: gjeanmart/parity-dev-docker
     ports:
       - "8545:8545"
@@ -124,10 +130,7 @@ services:
     depends_on:
       - parity
     environment:
-      ACTION: migrate
-      NETWORK: development
-      RPC_HOST: parity
-      RPC_PORT: 8545
+      NETWORK: docker
       API_PORT: 8888
       API_HOST: 0.0.0.0
     networks:
@@ -136,11 +139,26 @@ services:
 networks:
   default:
 
+```
+
+truffle.js
+
+```
+module.exports = {
+  networks: {
+    development: {
+      host: "127.0.0.1",
+      port: 8545,
+      network_id: "*"
+    },
+    docker: {
+      host: "parity-node",
+      port: 8545,
+      network_id: "*"
+    },
+  }
+}
 
 ```
 
-## Improvments
-
-- Have an option to run Ganache-cli locally
-- More validation on mandatory|optional variables
-- Add actions for other function (`compile`, `test`, `debug`)
+## 
