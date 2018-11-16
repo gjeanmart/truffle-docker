@@ -128,7 +128,7 @@ services:
     volumes:
       - /path/to/truffle/project:/project
     depends_on:
-      - parity
+      - parity-node
     environment:
       NETWORK: docker
       API_PORT: 8888
