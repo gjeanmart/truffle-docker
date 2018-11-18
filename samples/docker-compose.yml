@@ -13,14 +13,11 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - /home/gjeanmart/workspace/kauri/prague/smart-contracts:/project
+      - /path/to/truffle/project:/project
     depends_on:
       - eth-node
     environment:
-      ACTION: migrate
       NETWORK: docker
-      RPC_HOST: eth-node
-      RPC_PORT: 8545
       API_PORT: 8888
       API_HOST: 0.0.0.0
     networks:
