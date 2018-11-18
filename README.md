@@ -36,7 +36,7 @@ docker run -it \
 | -------- | -------- | -------- | -------- |
 | GIT_URL | no |  | Git project to retrieve (if empty, a volume must be set to bind a local project to $SRC_DIR) |
 | GIT_BRANCH | no | master | Git branch used id $GIT_URL is set |
-| SRC_DIR | yes | /project | Diretory of the Truffle project |
+| SRC_DIR | no | /project | Diretory of the Truffle project |
 | NETWORK | no | development | Network to deploy  |
 | API_PORT | no | 8888 | API port |
 | API_HOST | no | 0.0.0.0 | API host  |
