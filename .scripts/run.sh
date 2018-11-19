@@ -7,8 +7,18 @@ echo "###### Running truffle-docker"
 if [ ! -z "$GIT_URL" ]
 then
 	echo "[INFO] Clone data from git $GIT_URL (branch $GIT_BRANCH)..."
-	rm -rf $SRC_DIR/* || exit_on_error "Failed to empty the source directory"
-	git clone -b $GIT_BRANCH $GIT_URL $SRC_DIR || exit_on_error "Failed to clone the git repository $GIT_URL"
+	
+
+	if [ -f "/root/.ssh/id_rsa" ]
+	then
+		echo "[INFO] Configuring ssh key ..."
+		chmod 700 /root/.ssh/id_rsa
+		chmod 600 /root/.ssh/id_rsa.pub
+		echo -e "host github.com\n\tHostname github.com\n\tIdentityFile /root/.ssh/id_rsa\n\tStrictHostKeyChecking no\n" >> /root/.ssh/config
+	fi
+
+	rm -rf $SRC_DIR/* || { echo '[ERROR] Failed to empty the source directory' ; exit 1; }
+	git clone -b $GIT_BRANCH $GIT_URL $SRC_DIR || { echo '[ERROR] Failed to clone the git repository $GIT_URL' ; exit 1; }
 fi
 
 ##################################################
@@ -16,20 +26,21 @@ fi
 if [ -f "./package.json" ]
 then
 	echo "[INFO] Install dependancies ..."
-	rm -rf  ./node_modules || exit_on_error "Failed to remove the node_modules repository"
-	npm install || exit_on_error "Failed to install npm dependancies"
+	rm -rf  ./node_modules || { echo '[ERROR] Failed to remove the node_modules repository' ; exit 1; }
+	npm install || { echo '[ERROR] Failed to install npm dependancies' ; exit 1; }
 fi
 
 ##################################################
 ### RUN DEPLOYMENT
 echo "[INFO] Deploy smart contract (truffle migrate --network $NETWORK) ..."
-rm -rf ./build  || exit_on_error "Failed to remove the build repository"
-output=$(truffle migrate --reset --compile-all --network $NETWORK)
+rm -rf ./build || { echo '[ERROR] Failed to remove the build repository' ; exit 1; }
+output=$(truffle migrate --reset --compile-all --network $NETWORK) || { echo '[ERROR] Failed to deploy' ; exit 1; }
 echo "output: $output"
 
 ##################################################
 ### START API
 echo "[INFO] Start express (host: $API_HOST, port: $API_PORT)"
 cd /scripts
-npm install || exit_on_error "Failed to install npm dependancies"
-node ./api.js || exit_on_error "Failed to rin api.js"
+npm install || { echo '[ERROR] Failed to install npm dependancies' ; exit 1; }
+node ./api.js || { echo '[ERROR] Failed to rin api.js' ; exit 1; }
+

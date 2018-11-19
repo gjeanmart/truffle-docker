@@ -101,14 +101,38 @@ $ curl 'http://localhost:8888/api/MyContract/all'
         **Content:** 
 ```
 {
-  ...
+  "contractName": "MyContract",
+  "abi": [...],
+  "bytecode": "0x60806040...ca0029",
+  "sourceMap": "...",
+  "deployedSourceMap": "...",
+  "source": "pragma solidity ^0.4.24;...",
+  "sourcePath": "/project/contracts/MyContract.sol",
+  "ast": {}
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {
+    "17": {
+      "events": {},
+      "links": {},
+      "address": "0xd29915f1a3ff9846fe5d8d9d2c954de21932af7f",
+      "transactionHash": "0x043b125abfabd9758802c838dd037bc6f160500068b2c31e0149fa03186ea05a"
+    }
+  },
+  "schemaVersion": "2.0.1",
+  "updatedAt": "2018-11-19T14:58:40.322Z"
 }
 ```
 
+## FAQ
 
-## docker-compose
+### How to use with docker-compose
 
 Docker-compose using a separate ethereum node (see [partity-dev-docker](https://github.com/kauri-io/parity-docker))
+
+*docker-compose.yml*
 
 ```
 version: '3.2'
@@ -141,7 +165,7 @@ networks:
 
 ```
 
-truffle.js
+*truffle.js*
 
 ```
 module.exports = {
@@ -158,7 +182,21 @@ module.exports = {
     },
   }
 }
-
 ```
 
-## 
+### What if the GitHub repo is private
+
+It is possible to clone a private repo by passing a GitHub SSH keypair by sharing your a keypair to the container
+
+```
+  truffle:
+    image: gjeanmart/truffle-docker
+    ports:
+      - "8888:8888"    
+    volumes:
+      - /home/$USER/.ssh/id_rsa:/root/.ssh/id_rsa
+      - /home/$USER/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub
+    environment:
+      GIT_URL: git@github.com:username/my_private_repo.git
+      NETWORK: docker
+```      
