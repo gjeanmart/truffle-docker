@@ -8,10 +8,8 @@ if [ ! -z "$GIT_URL" ]
 then
 	echo "[INFO] Clone data from git $GIT_URL (branch $GIT_BRANCH)..."
 	
-
 	if [ -f "/root/.ssh/id_rsa" ]
 	then
-		echo "[INFO] Configuring ssh key ..."
 		chmod 700 /root/.ssh/id_rsa
 		chmod 600 /root/.ssh/id_rsa.pub
 		echo -e "host github.com\n\tHostname github.com\n\tIdentityFile /root/.ssh/id_rsa\n\tStrictHostKeyChecking no\n" >> /root/.ssh/config
