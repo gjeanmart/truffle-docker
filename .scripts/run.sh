@@ -16,7 +16,7 @@ then
 	fi
 
 	rm -rf $SRC_DIR/* || { echo '[ERROR] Failed to empty the source directory' ; exit 1; }
-	git clone -b $GIT_BRANCH $GIT_URL $SRC_DIR || { echo '[ERROR] Failed to clone the git repository $GIT_URL' ; exit 1; }
+	git clone -b $GIT_BRANCH $GIT_URL $SRC_DIR  || { echo '[ERROR] Failed to clone the git repository $GIT_URL' ; exit 1; }
 fi
 
 ##################################################
@@ -30,9 +30,9 @@ fi
 
 ##################################################
 ### RUN DEPLOYMENT
-echo "[INFO] Deploy smart contract (truffle migrate --reset --compile-all --network $NETWORK) ..."
+echo "[INFO] Deploy smart contract (truffle migrate --reset --compile-all --verbose-rpc --network $NETWORK) ..."
 rm -rf ./build || { echo '[ERROR] Failed to remove the build repository' ; exit 1; }
-output=$(truffle migrate --reset --compile-all --network $NETWORK) || { echo '[ERROR] Failed to deploy' ; exit 1; }
+output=$(truffle migrate --reset --compile-all --verbose-rpc --network $NETWORK ) || { echo '[ERROR] Failed to deploy' ; exit 1; }
 echo "output: $output"
 
 ##################################################
