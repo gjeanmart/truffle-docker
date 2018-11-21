@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "###### Running truffle-docker"
+echo "###### Running truffle-docker [v. $VERSION]"
 
 ##################################################
 ### LOAD SOURCES
@@ -32,7 +32,7 @@ fi
 ### RUN DEPLOYMENT
 echo "[INFO] Deploy smart contract (truffle migrate --reset --compile-all --verbose-rpc --network $NETWORK) ..."
 rm -rf ./build || { echo '[ERROR] Failed to remove the build repository' ; exit 1; }
-output=$(truffle migrate --reset --compile-all --verbose-rpc --network $NETWORK ) || { echo '[ERROR] Failed to deploy' ; exit 1; }
+output=$(truffle migrate --reset --compile-all --network $NETWORK ) || { echo '[ERROR] Failed to deploy' ; exit 1; }
 echo "output: $output"
 
 ##################################################

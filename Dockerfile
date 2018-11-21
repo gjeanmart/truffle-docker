@@ -1,21 +1,20 @@
-FROM node:latest
-
-MAINTAINER Gregoire Jeanmart version: 0.4
+FROM node:8
 
 USER root
 
 ####################################################################################################################
-# Install
-RUN npm -g config set user root
-RUN npm install -g truffle@4.1.13 && npm config set bin-links false
-
-####################################################################################################################
 # Env
+ENV VERSION "0.4"
 ENV API_HOST "0.0.0.0"
 ENV API_PORT "8888"
 ENV NETWORK "development"
 ENV SRC_DIR "/project"
 ENV GIT_BRANCH "master"
+ENV TRUFFLE_VERSION "4.1.14"
+
+####################################################################################################################
+# Install
+RUN npm install -g truffle@$TRUFFLE_VERSION && npm config set bin-links false
 
 ####################################################################################################################
 # Create project directory
@@ -37,3 +36,7 @@ EXPOSE $API_PORT
 WORKDIR $SRC_DIR
 
 CMD ["/scripts/run.sh"]
+
+
+
+MAINTAINER Gregoire Jeanmart version: $VERSION
