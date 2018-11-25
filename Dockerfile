@@ -4,7 +4,7 @@ USER root
 
 ####################################################################################################################
 # Env
-ENV VERSION "0.4"
+ENV VERSION "0.5"
 ENV API_HOST "0.0.0.0"
 ENV API_PORT "8888"
 ENV NETWORK "development"

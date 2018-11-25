@@ -8,7 +8,7 @@ const DEFAULT_PORT = 8888;
 const DEFAULT_HOST = "0.0.0.0";
 
 
-// call the packages we need
+var cors 	   = require('cors');				// cors
 var express    = require('express');        	// call express
 var app        = express();                 	// define our app using express
 var fs 		   = require('fs');
@@ -40,6 +40,7 @@ router.get('/:contractName/all', function(req, res) {
 
 
 // REGISTER OUR ROUTES -------------------------------
+app.use(cors())
 app.use('/api', router);
 
 
