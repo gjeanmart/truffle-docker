@@ -35,13 +35,10 @@ router.get('/:contractName', function(req, res) {
 
 router.get('/:contractName/all', function(req, res) {
 	var truffleArtefact = JSON.parse(fs.readFileSync('/project/build/contracts/'+req.params.contractName+'.json', 'utf8'));
+	var path = req.query.path || "$."
 
-	if(req.query.path) {
-		var result = JSONPath({path: req.query.path, json: truffleArtefact})
-		res.json(result);
-	}
-
-    res.json(truffleArtefact);   
+	var result = JSONPath({'path': path, 'json': truffleArtefact})
+	res.json(result);
 });
 
 
