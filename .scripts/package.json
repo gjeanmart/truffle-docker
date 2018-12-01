@@ -9,7 +9,8 @@
   "author": "",
   "dependencies": {
     "express": "4.16.4",
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "jsonpath-plus": "^0.18.0"
   },
   "license": "ISC"
 }

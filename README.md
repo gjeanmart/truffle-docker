@@ -34,6 +34,7 @@ docker run -it \
 
 | Name | Mandatory | Default | Description |
 | -------- | -------- | -------- | -------- |
+| COMMAND | no | migrate | migrate \| compile |
 | GIT_URL | no |  | Git project to retrieve (if empty, a volume must be set to bind a local project to $SRC_DIR) |
 | GIT_BRANCH | no | master | Git branch used id $GIT_URL is set |
 | SRC_DIR | no | /project | Diretory of the Truffle project |
@@ -82,7 +83,7 @@ $ curl 'http://localhost:8888/api/MyContract'
 ### Get Smart Contract Truffle artefact
 Retrieve the smart contract Truffle artefacts for a given contract name
 
--   **URL:** `/api/{smart_contract}/all`    
+-   **URL:** `/api/{smart_contract}/all?path=/abi`    
 -   **Method:** `GET`
 -   **Header:** `N/A`
 -   **URL Params:** 
@@ -90,6 +91,7 @@ Retrieve the smart contract Truffle artefacts for a given contract name
 | Name | Mandatory | Default | Description |
 | -------- | -------- | -------- | -------- |
 | smart_contract | yes |  | Smart Contract filename (witout extension `.sol`) |
+| path | no |  | JSON Path |
 
 -   **Sample Request:**
 ```

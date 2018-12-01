@@ -29,11 +29,18 @@ then
 fi
 
 ##################################################
-### RUN DEPLOYMENT
-echo "[INFO] Deploy smart contract (truffle migrate --reset --compile-all --verbose-rpc --network $NETWORK) ..."
+### RUN TRUFFLE COMMAND
 rm -rf ./build || { echo '[ERROR] Failed to remove the build repository' ; exit 1; }
-output=$(truffle migrate --reset --compile-all --network $NETWORK ) || { echo '[ERROR] Failed to deploy' ; exit 1; }
+if [ $COMMAND = "compile" ];
+then
+	echo "[INFO] Compile smart contracts (truffle compile) ..."
+	output=$(truffle compile) || { echo '[ERROR] Failed to compile' ; exit 1; }
+else
+	echo "[INFO] Deploy smart contracts (truffle migrate --reset --compile-all --network $NETWORK) ..."
+	output=$(truffle migrate --reset --compile-all --network $NETWORK) || { echo '[ERROR] Failed to migrate' ; exit 1; }
+fi
 echo "output: $output"
+
 
 ##################################################
 ### START API

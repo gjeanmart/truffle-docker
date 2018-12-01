@@ -12,6 +12,7 @@ var cors 	   = require('cors');				// cors
 var express    = require('express');        	// call express
 var app        = express();                 	// define our app using express
 var fs 		   = require('fs');
+var {JSONPath} = require('jsonpath-plus');
 
 // Server host and port
 var port = process.env.API_PORT || DEFAULT_PORT;    // set our port
@@ -34,6 +35,12 @@ router.get('/:contractName', function(req, res) {
 
 router.get('/:contractName/all', function(req, res) {
 	var truffleArtefact = JSON.parse(fs.readFileSync('/project/build/contracts/'+req.params.contractName+'.json', 'utf8'));
+
+	if(req.query.path) {
+		var result = JSONPath({path: req.query.path, json: truffleArtefact})
+		res.json(result);
+	}
+
     res.json(truffleArtefact);   
 });
 
