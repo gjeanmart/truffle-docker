@@ -7,7 +7,7 @@ echo "###### Running truffle-docker [v. $VERSION]"
 if [ ! -z "$GIT_URL" ]
 then
 	echo "[INFO] Clone data from git $GIT_URL (branch $GIT_BRANCH)..."
-	
+
 	if [ -f "/root/.ssh/id_rsa" ]
 	then
 		chmod 700 /root/.ssh/id_rsa
@@ -23,9 +23,9 @@ fi
 ### INSTALL DEPENDANCIES
 if [ -f "./package.json" ]
 then
-	echo "[INFO] Install dependancies ..."
+	echo "[INFO] Install dependencies ..."
 	rm -rf  ./node_modules || { echo '[ERROR] Failed to remove the node_modules repository' ; exit 1; }
-	npm install || { echo '[ERROR] Failed to install npm dependancies' ; exit 1; }
+	npm install || { echo '[ERROR] Failed to install npm dependencies' ; exit 1; }
 fi
 
 ##################################################
@@ -48,4 +48,3 @@ echo "[INFO] Start express (host: $API_HOST, port: $API_PORT)"
 cd /scripts
 npm install || { echo '[ERROR] Failed to install npm dependancies' ; exit 1; }
 node ./api.js || { echo '[ERROR] Failed to rin api.js' ; exit 1; }
-
