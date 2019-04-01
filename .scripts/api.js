@@ -24,13 +24,13 @@ router.get('/', function(req, res) {
 });
 
 router.get('/:contractName', function(req, res) {
-	var truffleArtefact = JSON.parse(fs.readFileSync('/project/build/contracts/'+req.params.contractName+'.json', 'utf8'));
+	var truffleArtefact = JSON.parse(fs.readFileSync('/project' + folder + '/build/contracts/'+req.params.contractName+'.json', 'utf8'));
 	var contractAddress = truffleArtefact.networks[Object.keys(truffleArtefact.networks)[0]].address;
     res.json({ "name": req.params.contractName, "address": contractAddress });
 });
 
 router.get('/:contractName/all', function(req, res) {
-	var truffleArtefact = JSON.parse(fs.readFileSync('/project/build/contracts/'+req.params.contractName+'.json', 'utf8'));
+	var truffleArtefact = JSON.parse(fs.readFileSync('/project' + folder + '/build/contracts/'+req.params.contractName+'.json', 'utf8'));
 
 	if(req.query.path) {
 		res.json(JSONPath({'path': req.query.path, 'json': truffleArtefact}));
