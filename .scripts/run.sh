@@ -15,8 +15,11 @@ then
 		echo -e "host github.com\n\tHostname github.com\n\tIdentityFile /root/.ssh/id_rsa\n\tStrictHostKeyChecking no\n" >> /root/.ssh/config
 	fi
 
-	rm -rf $SRC_DIR/* || { echo '[ERROR] Failed to empty the source directory' ; exit 1; }
-	git clone -b $GIT_BRANCH $GIT_URL $SRC_DIR  || { echo '[ERROR] Failed to clone the git repository $GIT_URL' ; exit 1; }
+	cd $SRC_DIR
+    git init
+    git remote add origin $GIT_URL
+    git checkout -b $GIT_BRANCH
+    git pull origin $GIT_BRANCH
 fi
 
 
@@ -42,7 +45,7 @@ then
 	output=$(truffle compile) || { echo '[ERROR] Failed to compile' ; exit 1; }
 else
 	echo "[INFO] Deploy smart contracts (truffle migrate --reset --compile-all --network $NETWORK) ..."
-	output=$(truffle migrate --reset --compile-all --network $NETWORK) || { echo '[ERROR] Failed to migrate' ; exit 1; }
+	output=$(truffle migrate --reset --compile-all --network $NETWORK)
 fi
 echo "output: $output"
 
