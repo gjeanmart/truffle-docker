@@ -19,6 +19,11 @@ then
 	git clone -b $GIT_BRANCH $GIT_URL $SRC_DIR  || { echo '[ERROR] Failed to clone the git repository $GIT_URL' ; exit 1; }
 fi
 
+
+##################################################
+### NAVIGATE IN A SUBFOLDER IF REQUIRED
+cd $SRC_DIR$GIT_FOLDER  || { echo '[ERROR] Cannot navigate to folder $SRC_DIR$GIT_FOLDER ' ; exit 1; }
+
 ##################################################
 ### INSTALL DEPENDANCIES
 if [ -f "./package.json" ]

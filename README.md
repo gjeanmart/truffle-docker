@@ -37,6 +37,7 @@ docker run -it \
 | COMMAND | no | migrate | migrate \| compile |
 | GIT_URL | no |  | Git project to retrieve (if empty, a volume must be set to bind a local project to $SRC_DIR) |
 | GIT_BRANCH | no | master | Git branch used id $GIT_URL is set |
+| GIT_FOLDER | no | / | Folder within the repo where the Truffle project takes place  |
 | SRC_DIR | no | /project | Diretory of the Truffle project |
 | NETWORK | no | development | Network to deploy  |
 | API_PORT | no | 8888 | API port |
@@ -45,8 +46,8 @@ docker run -it \
 ### Port
 
 | Port | Description |
-| -------- | -------- | 
-| 8888 | API | 
+| -------- | -------- |
+| 8888 | API |
 
 
 
@@ -58,7 +59,7 @@ Retrieve the smart contract address for a given contract name
 -   **URL:** `/api/{smart_contract}`    
 -   **Method:** `GET`
 -   **Header:** `N/A`
--   **URL Params:** 
+-   **URL Params:**
 
 | Name | Mandatory | Default | Description |
 | -------- | -------- | -------- | -------- |
@@ -71,7 +72,7 @@ $ curl 'http://localhost:8888/api/MyContract'
 
 -   **Success Response:**
     -   **Code:** 200  
-        **Content:** 
+        **Content:**
 ```
 {
     "name": "MyContract",
@@ -86,7 +87,7 @@ Retrieve the smart contract Truffle artefacts for a given contract name
 -   **URL:** `/api/{smart_contract}/all?path=/abi`    
 -   **Method:** `GET`
 -   **Header:** `N/A`
--   **URL Params:** 
+-   **URL Params:**
 
 | Name | Mandatory | Default | Description |
 | -------- | -------- | -------- | -------- |
@@ -100,7 +101,7 @@ $ curl 'http://localhost:8888/api/MyContract/all'
 
 -   **Success Response:**
     -   **Code:** 200  
-        **Content:** 
+        **Content:**
 ```
 {
   "contractName": "MyContract",
@@ -139,7 +140,7 @@ Docker-compose using a separate ethereum node (see [partity-dev-docker](https://
 ```
 version: '3.2'
 services:
-     
+
   parity-node:
     image: gjeanmart/parity-dev-docker
     ports:

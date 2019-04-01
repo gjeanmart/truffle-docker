@@ -11,6 +11,7 @@ ENV API_PORT "8888"
 ENV NETWORK "development"
 ENV SRC_DIR "/project"
 ENV GIT_BRANCH "master"
+ENV GIT_FOLDER "/"
 ENV TRUFFLE_VERSION "5.0.10"
 
 ####################################################################################################################
